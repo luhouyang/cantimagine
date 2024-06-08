@@ -4,11 +4,11 @@ import streamlit as st
 
 class AIModel:
     def __init__(self):
-        api_key = st.secrets.openai.openai_api_key
+        self.api_key = st.secrets.openai.openai_api_key
 
-    def initModel():
+    def initModel(self):
         client = OpenAI(
-            api_key=st.secrets.openai.openai_api_key,
+            api_key=self.api_key,
         )
         return client
 
