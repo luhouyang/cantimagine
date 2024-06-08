@@ -37,7 +37,7 @@ def get_blob_from_firebase(bucket_name="imagine-whack.appspot.com"):
     data = []
     for uri in uris:
         blob = bucket.blob(uri)
-        print(blob.name.split("/")[-1])
+        # print(blob.name.split("/")[-1])
         res = blob.download_as_bytes()
         data.append({
             'name': blob.name.split("/")[-1],
@@ -45,5 +45,21 @@ def get_blob_from_firebase(bucket_name="imagine-whack.appspot.com"):
             })
     return data
 
-def get_shared_from_firebase():
-    pass
+def get_shared_from_firebase(bucket_name="imagine-whack.appspot.com"):
+    storage_client = storage.Client.from_service_account_info(st.secrets['firebases_key'])
+    bucket = storage_client.bucket(bucket_name)
+
+    blobs = bucket.list_blobs(prefix="startup_type/" + st.session_state.userdata['startup_type'])
+    
+    data = []
+    paths = [blob.name for blob in blobs]
+
+    for path in paths:
+        reff = bucket.blob(path)
+        res = reff.download_as_bytes()
+        data.append({
+            'name': reff.name.split("/")[-1],
+            'content': str(res.decode('utf-8'))
+            })
+    
+    return data

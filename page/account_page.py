@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_extras.bottom_container import bottom
 from model.pdf_reader import extract_individual_data
-from model.cloud_storage import upload_blob_from_memory
+from model.cloud_storage import upload_blob_from_memory, get_shared_from_firebase
 
 
 def uploadFile(file, destination):
@@ -14,6 +14,10 @@ def account_page():
     accountPage = st.container()
     with accountPage:
         st.title("Account Page")
+        
+        data = get_shared_from_firebase()
+        st.write(data)
+
         col1, col2, col3 = st.columns(3)
         if "pdf_datas" in st.session_state:
             for i in range(len(st.session_state.pdf_datas)):
