@@ -16,7 +16,7 @@ class AIModel:
         client = self.initModel()
         stream = client.chat.completions.create(
             messages=messages,
-            model="gpt-3.5-turbo",
-            stream=True, max_tokens=600, temperature=0.5
+            model=st.session_state.model,
+            stream=True, max_tokens=st.session_state.max_tokens, temperature=st.session_state.temperature
         )
         return stream

@@ -11,7 +11,7 @@ from firebase_admin import credentials
 from model.firestore_model import get_userdata
 from entities.userdata_entity import UserdataEntity
 
-try: 
+try:
     app = firebase_admin.get_app()
 except ValueError as e:
     cert = {
@@ -33,7 +33,7 @@ except ValueError as e:
 st.set_page_config(layout="wide")
 
 if "google_auth_code" not in st.session_state:
-        auth_flow()
+    auth_flow()
 
 if "google_auth_code" in st.session_state:
     user_info = st.session_state["user_info"]
@@ -48,6 +48,21 @@ if "google_auth_code" in st.session_state:
             icons=["house-fill", "lightbulb", "chat-fill", "person-circle"],
             default_index=0,
         )
+
+        container = st.container(height=300)
+        with container:
+            if "model" in st.session_state:
+                st.session_state.model = "gpt-3.5-turbo"
+            if "max_tokens" in st.session_state:
+                st.session_state.max_tokens = 500
+            if "temperature" in st.session_state:
+                st.session_state.temperature = 0.5
+            st.session_state.model = st.radio("Select model", options=[
+                "gpt-3.5-turbo", "gpt-4"], index=0)
+            st.session_state.max_tokens = st.number_input(
+                "Max Tokens", value=500, min_value=0, max_value=4000, step=100, )
+            st.session_state.temperature = st.slider(
+                "Temperature", min_value=0.0, max_value=1.0, step=0.1, value=0.5)
 
     # global state variables
     if 'userdata' not in st.session_state:

@@ -11,3 +11,13 @@ def extract_data(pdf_files):
                 pdf_text += page.extract_text() or ''
             all_texts.append(pdf_text)
     return all_texts
+
+
+def extract_individual_data(pdf_file):
+
+    with pdfplumber.open(pdf_file) as pdf:
+        pdf_text = ''
+        for page in pdf.pages:
+            # Extract text, append if text is not None
+            pdf_text += page.extract_text() or ''
+        return pdf_text
