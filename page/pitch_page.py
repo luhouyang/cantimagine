@@ -17,26 +17,6 @@ We are looking for {resources_asked} to help us {how_resources_used}.
 """
 
 
-# global state variables
-if 'pitch_details' not in st.session_state:
-     st.session_state.pitch_details = {
-          'name_of_company': "",
-          'offering': "",
-          'audience': "",
-          'problem_solved': "",
-          'technologies': "",
-          'area_of_operation': "",
-          'market': "",
-          'value': "",
-          'competitor1': "",
-          'competitor2': "",
-          'key_difference': "",
-          'state_of_startup': "",
-          'resources_asked': "",
-          'how_resources_used': ""
-     }
-
-
 #
 # functions
 #
@@ -80,15 +60,71 @@ def evaluatePitch():
                     message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
+def two_col(obj1, obj2):
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if value1 := st.text_input(key=obj1[2], label=obj1[0], placeholder=obj1[1], value=st.session_state.pitch_details[obj1[2]]):
+            st.session_state.pitch_details[obj1[2]] = value1
+
+    with col2:
+        if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.pitch_details[obj2[2]]):
+            st.session_state.pitch_details[obj2[2]] = value2
+    
 
 # ui page
 def pitch_page():
     pitchPage = st.container()
     with pitchPage:
+        # global state variables
+        if 'pitch_details' not in st.session_state:
+            st.session_state.pitch_details = {
+                'name_of_company': "",
+                'offering': "",
+                'audience': "",
+                'problem_solved': "",
+                'technologies': "",
+                'area_of_operation': "",
+                'market': "",
+                'value': "",
+                'competitor1': "",
+                'competitor2': "",
+                'key_difference': "",
+                'state_of_startup': "",
+                'resources_asked': "",
+                'how_resources_used': ""
+            }
+
         st.title("Elevator Pitch")
         st.divider()
 
-        st.write("Text text2")
-        st.text_input(label="company", placeholder="company")
-        st.write("Text text2")
-        st.text_input(label="offering", placeholder="offering")
+        container = st.container(height=400)
+        with container:
+            st.header("About Startup")
+            two_col(["My company", "company name", 'name_of_company'], ["Is developing", "product/service", 'offering'])
+            two_col(["To help", "audience", 'audience'], ["To solve", "problem solved", 'problem_solved'])
+            two_col(["Using", "technologies", 'technologies'], ["We plan to operate", "area of operation", 'area_of_operation'])
+        
+        container = st.container(height=200)
+        with container:
+            st.header("About Market")
+            two_col(["We compete in", "market", 'market'], ["Last years market value", "value e.g. 100 million", 'value'])
+        
+        container = st.container(height=300)
+        with container:
+            st.header("Competitors & Key Difference")
+            two_col(["We are similar to", "company 1", 'competitor1'], ["We are similar to", "company 2", 'competitor2'])
+            if value := st.text_input(label="Our key difference", placeholder="key difference", value=st.session_state.pitch_details['key_difference']):
+                st.session_state.pitch_details['key_difference'] = value
+        
+        container = st.container(height=300)
+        with container:
+            st.header("Funding")
+            if value := st.text_input(label="Current state and progress", placeholder="state", value=st.session_state.pitch_details['state_of_startup']):
+                st.session_state.pitch_details['state_of_startup'] = value
+            two_col(["We are looking for", "resources", 'resources_asked'], ["To help us", "how resources are used", 'how_resources_used'])
+        
+        st.write(user_prompt_template.format_map(st.session_state.pitch_details))
+
+        if st.button(label="Evaluate Pitch"):
+            evaluatePitch()
