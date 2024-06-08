@@ -1,8 +1,5 @@
-class Prompts:
-    swot_system_message = '''
-You are a 
+swot_system_message = ''''''
 
-'''
+elevator_system_message = ''''''
 
-    # def __init__(self):
-    #     self.swot_system_message = swot_system_message
+question_bot_system_message = ''''''
