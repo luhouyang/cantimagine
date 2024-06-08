@@ -1,6 +1,13 @@
 import streamlit as st
 from model.model import AIModel
 from streamlit_extras.bottom_container import bottom
+import model.prompt as prt
+
+
+def getAvatar(role):
+    if role == "user":
+        return "😂"
+    return "👩‍🎨"
 
 
 def chat_page():
@@ -15,7 +22,7 @@ def chat_page():
         if "messages" not in st.session_state:
             st.session_state.messages = [
                 {"role": "system",
-                    "content": "You are a very angry man, everything you say is harsh"},
+                    "content": prt.question_bot_system_message},
                 {"role": "assistant", "content": "Share your startup idea!"}]
 
         for message in st.session_state.messages:
