@@ -25,7 +25,7 @@ def upload_blob_from_memory(contents, destination_blob_name, bucket_name="imagin
     userdata = UserdataEntity(**st.session_state.userdata)
     set_userdata(userdata.to_dict())
 
-    shared_data_name = "startup_type/" + st.session_state.userdata['startup_type'] + '/' + datetime.datetime.year + datetime.datetime.month + datetime.datetime.microsecond + destination_blob_name
+    shared_data_name = "startup_type/" + st.session_state.userdata['startup_type'] + '/' + str(datetime.datetime.now().year) + str(datetime.datetime.now().month) + str(datetime.datetime.now().microsecond) + destination_blob_name
     blob2 = bucket.blob(shared_data_name)
     blob2.upload_from_string(byte_data)
 
