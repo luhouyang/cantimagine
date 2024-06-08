@@ -29,21 +29,21 @@ We are looking for {resources_asked} to help us {how_resources_used}.
 def evaluatePitch(option_type):
     chat_ai = AIModel()
 
-    # if "slides_gen_messages" not in st.session_state:
-    #     st.session_state.slides_gen_messages = [
-    #         {
-    #             "role": "system",
-    #             "content": prt.slides_system_message.format_map(st.session_state.userdata)
-    #         }
-    #     ]
-    # slide_gen = SlideGenerator()
-    # slides_titles = slide_gen.slide_titles
-    # slide_contents = [slide_gen.generate_slide_content(
-    #     st.session_state.slides_gen_messages + [{"role": "user", "content": f'Generate pitch deck part for{title}'}]) for title in slides_titles]
+    if "slides_gen_messages" not in st.session_state:
+        st.session_state.slides_gen_messages = [
+            {
+                "role": "system",
+                "content": prt.slides_system_message.format_map(st.session_state.userdata)
+            }
+        ]
+    slide_gen = SlideGenerator()
+    slides_titles = slide_gen.slide_titles
+    slide_contents = [slide_gen.generate_slide_content(
+        st.session_state.slides_gen_messages + [{"role": "user", "content": f'Generate pitch deck part for{title}'}]) for title in slides_titles]
 
-    # slide_gen.create_presentation(slides_titles, slide_contents)
-    # st.success("Presentation generated successfully!")
-    # st.markdown(slide_gen.get_ppt_download_link(), unsafe_allow_html=True)
+    slide_gen.create_presentation(slides_titles, slide_contents)
+    st.success("Presentation generated successfully!")
+    st.markdown(slide_gen.get_ppt_download_link(), unsafe_allow_html=True)
 
     # st.session_state.slides_gen_messages.append({
     #     "role": "user",
