@@ -5,7 +5,7 @@ class UserdataEntity:
                  technologies="", area_of_operation="", market="", value="",
                  competitor1="", competitor2="", key_difference="", state_of_startup="",
                  resources_asked="", how_resources_used="", chat_history=[],
-                 pitch="", blobs_urls=[], date=datetime.datetime.now()):
+                 pitch="", blobs_urls=[], date=datetime.datetime.now(), startup_type=""):
         self.name_of_company = name_of_company
         self.offering = offering
         self.audience = audience
@@ -24,6 +24,7 @@ class UserdataEntity:
         self.pitch = pitch
         self.blobs_urls = blobs_urls if blobs_urls else []
         self.date = date
+        self.startup_type = startup_type
 
     def to_dict(self):
         return {
@@ -44,7 +45,8 @@ class UserdataEntity:
             'chat_history': self.chat_history,
             'pitch': self.pitch,
             'blobs_urls': self.blobs_urls,
-            'date': self.date
+            'date': self.date,
+            'startup_type': self.startup_type
         }
     
     @classmethod
