@@ -1,6 +1,7 @@
 import streamlit as st
 from model.model import AIModel
 from streamlit_extras.bottom_container import bottom
+from model.pdf_reader import extract_data
 import model.prompt as prt
 
 
@@ -31,9 +32,19 @@ def chat_page():
                     st.markdown(message["content"])
 
         with bottom():
+
+            uploaded_files = st.file_uploader(
+                'Upload relevant pdf', type='pdf', accept_multiple_files=True)
+
             query = st.chat_input("Chat with Question Bot")
 
         if prompt := query:
+            internal_prompt = prompt
+            if uploaded_files is not None:
+                df = extract_data(uploaded_files)
+                internal_prompt += f'Here is the data extracted from pdf files for your reference:\n {df}'
+
+            concatenated_prompt = st.session_state.messages
             st.session_state.messages.append(
                 {"role": "user", "content": prompt})
             with st.chat_message("user"):
@@ -43,9 +54,10 @@ def chat_page():
                 message_placeholder = st.empty()
                 full_response = ""
                 for chunck in chat_ai.loadChatCompletion([{"role": m["role"], "content": m["content"]}
-                                                          for m in st.session_state.messages]):
+                                                          for m in concatenated_prompt] + [{"role": "user", "content": internal_prompt}]):
                     full_response += chunck.choices[0].delta.content or ""
                     message_placeholder.markdown(full_response + "▌")
                 message_placeholder.markdown(full_response)
+
             st.session_state.messages.append(
                 {"role": "assistant", "content": full_response})

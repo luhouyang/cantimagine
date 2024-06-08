@@ -1,5 +1,5 @@
-from openai import OpenAI
 import streamlit as st
+from openai import OpenAI
 
 
 class AIModel:
