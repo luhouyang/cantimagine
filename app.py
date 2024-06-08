@@ -33,6 +33,8 @@ except ValueError as e:
 
 st.set_page_config(layout="wide")
 
+
+
 if "google_auth_code" not in st.session_state:
     auth_flow()
 
@@ -41,6 +43,8 @@ if "google_auth_code" in st.session_state:
     # st.write(user_info)
 
     with st.sidebar:
+
+        st.image(image=user_info['picture'])
 
         selected = option_menu(
             menu_icon="robot",
