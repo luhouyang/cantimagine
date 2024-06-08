@@ -26,10 +26,11 @@ def auth_flow():
     #     scopes=["https://www.googleapis.com/auth/userinfo.email", "openid"],
     #     redirect_uri="http://localhost:8501",
     # )
-    flow = google_auth_oauthlib.flow.Flow.from_client_config(auth_secret, # replace with you json credentials from your google auth app
-        scopes=["https://www.googleapis.com/auth/userinfo.email", "openid"],
-        redirect_uri="http://localhost:8501",
-    )
+    flow = google_auth_oauthlib.flow.Flow.from_client_config(auth_secret,  # replace with you json credentials from your google auth app
+                                                             scopes=[
+                                                                 "https://www.googleapis.com/auth/userinfo.email", "openid"],
+                                                             redirect_uri="http://localhost:8501",
+                                                             )
     if auth_code:
         flow.fetch_token(code=auth_code)
         credentials = flow.credentials
@@ -46,11 +47,20 @@ def auth_flow():
 
         create_firebase_user(user_info.get("email"))
     else:
-        if st.button("Sign in with Google"):
-            authorization_url, state = flow.authorization_url(
-                access_type="offline",
-                include_granted_scopes="true",
-                prompt="select_account"
-            )
-            webbrowser.open_new_tab(authorization_url)
-            
+        col1, col2, col3 = st.columns([2, 1, 2])
+
+        with col2:
+            container = st.container(border=True, height=400)
+            with container:
+                col4, col5, col6 = st.columns([1, 2, 1])
+                with col5:
+                    st.header("Log in")
+                st.text("Sign in now to \naccelerate your startup \nidea!")
+                # st.image("asset/spy.png", width=200)
+                if st.button("Sign in with Google", use_container_width=True):
+                    authorization_url, state = flow.authorization_url(
+                        access_type="offline",
+                        include_granted_scopes="true",
+                        prompt="select_account"
+                    )
+                    webbrowser.open_new_tab(authorization_url)
