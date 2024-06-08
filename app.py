@@ -35,6 +35,7 @@ if "google_auth_code" not in st.session_state:
 
 if "google_auth_code" in st.session_state:
     user_info = st.session_state["user_info"]
+    # st.write(user_info)
 
     with st.sidebar:
 

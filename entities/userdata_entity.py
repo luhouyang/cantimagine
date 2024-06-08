@@ -21,3 +21,24 @@ class UserdataEntity:
         self.chat_history = chat_history if chat_history else []
         self.pitch = pitch
         self.blobs_urls = blobs_urls if blobs_urls else []
+
+    def to_dict(self):
+        return {
+            'name_of_company': self.name_of_company,
+            'offering': self.offering,
+            'audience': self.audience,
+            'problem_solved': self.problem_solved,
+            'technologies': self.technologies,
+            'area_of_operation': self.area_of_operation,
+            'market': self.market,
+            'value': self.value,
+            'competitor1': self.competitor1,
+            'competitor2': self.competitor2,
+            'key_difference': self.key_difference,
+            'state_of_startup': self.state_of_startup,
+            'resources_asked': self.resources_asked,
+            'how_resources_used': self.how_resources_used,
+            'chat_history': self.chat_history,
+            'pitch': self.pitch,
+            'blobs_urls': self.blobs_urls
+        }

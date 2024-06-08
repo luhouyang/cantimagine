@@ -2,16 +2,10 @@ import streamlit as st
 from google.cloud import firestore
 
 
-def set_userdata(output):
+def set_userdata(userdataEntity):
     db = firestore.Client.from_service_account_info(
         st.secrets['firebases_key'])
-    doc_ref = db.collection("users").document().id
-    db.collection("users").document(doc_ref).set(
-        {
-            "docId": doc_ref,
-            "content": output
-        }
-    )
+    res = db.collection("users").document(st.session_state.user_info["id"]).set(userdataEntity)
 
 
 def get_userdata():

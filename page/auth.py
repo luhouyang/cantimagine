@@ -15,7 +15,7 @@ def create_firebase_user(email):
             email=email,
             email_verified=True
         )
-        st.write(f"Created new Firebase user: {user.uid}")
+        # st.write(f"Created new Firebase user: {user.uid}")
 
 
 def auth_flow():

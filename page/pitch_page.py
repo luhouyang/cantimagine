@@ -64,8 +64,8 @@ def evaluatePitch():
             {"role": "assistant", "content": full_response})
 
     userdataEntity = UserdataEntity(
-        st.session_state.pitch_details, pitch=full_response)
-    set_userdata(userdataEntity)
+        **st.session_state.pitch_details, pitch=full_response)
+    set_userdata(userdataEntity.to_dict())
 
 
 def two_col(obj1, obj2):
