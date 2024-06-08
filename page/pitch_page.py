@@ -2,6 +2,7 @@
 import streamlit as st
 from model.model import AIModel
 import model.prompt as prt
+import datetime
 from model.firestore_model import set_userdata
 from entities.userdata_entity import UserdataEntity
 from model.slides_generator import SlideGenerator
@@ -25,7 +26,7 @@ We are looking for {resources_asked} to help us {how_resources_used}.
 #
 
 # evaluate elevator pitch
-def evaluatePitch():
+def evaluatePitch(option_type):
     chat_ai = AIModel()
 
     if "slides_gen_messages" not in st.session_state:
@@ -68,8 +69,10 @@ def evaluatePitch():
     # st.session_state.slides_gen_messages.append(
     #     {"role": "assistant", "content": full_response})
 
-    userdataEntity = UserdataEntity(
-        **st.session_state.userdata, pitch=full_response)
+    st.session_state.userdata['pitch'] = full_response
+    st.session_state.userdata['date'] = datetime.datetime.now()
+    st.session_state.userdata['startup_type'] = option_type
+    userdataEntity = UserdataEntity(**st.session_state.userdata)
     set_userdata(userdataEntity.to_dict())
 
 
@@ -95,7 +98,7 @@ def pitch_page():
         left_col, right_col = st.columns(2)
 
         with left_col:
-            container = st.container(height=400)
+            container = st.container(height=430)
             with container:
                 st.header("About Startup")
                 two_col(["My company", "company name", 'name_of_company'], [
@@ -104,14 +107,15 @@ def pitch_page():
                         "To solve", "problem solved", 'problem_solved'])
                 two_col(["Using", "technologies", 'technologies'], [
                         "We plan to operate", "area of operation", 'area_of_operation'])
+                option_type = st.selectbox(label="Type", options=["Tech"])
             container = st.container(height=200)
             with container:
                 st.header("About Market")
                 two_col(["We compete in", "market", 'market'], [
-                        "Last years market value", "value e.g. 100 million", 'value'])
+                        "Last year's market", "value e.g. 100 million", 'value'])
 
         with right_col:
-            container = st.container(height=300)
+            container = st.container(height=330)
             with container:
                 st.header("Competitors & Key Difference")
                 two_col(["We are similar to", "company 1", 'competitor1'], [
@@ -130,4 +134,4 @@ def pitch_page():
             st.session_state.userdata))
 
         if st.button(label="Evaluate Pitch"):
-            evaluatePitch()
+            evaluatePitch(option_type)
