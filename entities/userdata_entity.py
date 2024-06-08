@@ -1,9 +1,11 @@
+import datetime
+
 class UserdataEntity:
     def __init__(self, name_of_company="", offering="", audience="", problem_solved="",
                  technologies="", area_of_operation="", market="", value="",
                  competitor1="", competitor2="", key_difference="", state_of_startup="",
                  resources_asked="", how_resources_used="", chat_history=[],
-                 pitch="", blobs_urls=[]):
+                 pitch="", blobs_urls=[], date=datetime.datetime.now()):
         self.name_of_company = name_of_company
         self.offering = offering
         self.audience = audience
@@ -21,6 +23,7 @@ class UserdataEntity:
         self.chat_history = chat_history if chat_history else []
         self.pitch = pitch
         self.blobs_urls = blobs_urls if blobs_urls else []
+        self.date = date
 
     def to_dict(self):
         return {
@@ -40,7 +43,8 @@ class UserdataEntity:
             'how_resources_used': self.how_resources_used,
             'chat_history': self.chat_history,
             'pitch': self.pitch,
-            'blobs_urls': self.blobs_urls
+            'blobs_urls': self.blobs_urls,
+            'date': self.date
         }
     
     @classmethod
