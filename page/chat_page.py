@@ -63,8 +63,7 @@ def chat_page():
 
             st.session_state.messages.append(
                 {"role": "assistant", "content": full_response})
-            if "SWOT" in full_response:
+            if "SWOT" and "Threats" in full_response:
                 parsed_swot_data = swot.extract_swot(full_response)
                 st.subheader('SWOT Analysis Chart')
-                swot_fig = swot.create_swot_chart(parsed_swot_data)
-                st.pyplot(swot_fig)
+                swot.create_swot_chart(parsed_swot_data)
