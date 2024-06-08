@@ -17,6 +17,25 @@ with st.sidebar:
         default_index=0,
     )
 
+# global state variables
+if 'pitch_details' not in st.session_state:
+    st.session_state.pitch_details = {
+        'name_of_company': "",
+        'offering': "",
+        'audience': "",
+        'problem_solved': "",
+        'technologies': "",
+        'area_of_operation': "",
+        'market': "",
+        'value': "",
+        'competitor1': "",
+        'competitor2': "",
+        'key_difference': "",
+        'state_of_startup': "",
+        'resources_asked': "",
+        'how_resources_used': ""
+    }
+
 if selected == "Home":
     home.home_page()
 
