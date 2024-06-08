@@ -16,7 +16,7 @@ def chat_page():
 
     with chatPage:
 
-        st.title("Chat Page")
+        st.title("Idea Kitchen")
         st.text("This kitchen is where you cook your idea.\nThe chatbot is a questionable one, often asks you questions, targetting your pain points.\nIt may be harsh but bear with it.")
 
         if "messages" not in st.session_state:
