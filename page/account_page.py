@@ -15,6 +15,9 @@ def account_page():
     with accountPage:
         st.title("Account Page")
         # col1, col2, col3 = st.columns(3)
+
+        st.write(st.session_state.pdf_datas)
+
         with bottom():
             left_col, right_col = st.columns((8, 2))
             with left_col:

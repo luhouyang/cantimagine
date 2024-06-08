@@ -9,6 +9,7 @@ from streamlit_option_menu import option_menu
 import firebase_admin
 from firebase_admin import credentials
 from model.firestore_model import get_userdata
+from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
 
 try:
@@ -70,8 +71,11 @@ if "google_auth_code" in st.session_state:
             data = get_userdata()
             userdataEntity = UserdataEntity.from_firestore(data)
             st.session_state.userdata = userdataEntity.to_dict()
+
+            st.session_state.pdf_datas = get_blob_from_firebase()
         except:
             st.session_state.userdata = UserdataEntity().to_dict()
+            st.session_state.pdf_datas = []
 
     if selected == "Home":
         home.home_page()
