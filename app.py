@@ -48,8 +48,8 @@ if "google_auth_code" in st.session_state:
         )
 
     # global state variables
-    if 'pitch_details' not in st.session_state:
-        st.session_state.pitch_details = {
+    if 'userdata' not in st.session_state:
+        st.session_state.userdata = {
             'name_of_company': "",
             'offering': "",
             'audience': "",

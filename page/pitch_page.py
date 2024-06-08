@@ -32,7 +32,7 @@ def evaluatePitch():
             st.session_state.slides_gen_messages = [
                 {
                     "role": "system",
-                    "content": elevator_system_message.format_map(st.session_state.pitch_details)
+                    "content": elevator_system_message.format_map(st.session_state.userdata)
                 },
                 {
                     "role": "assistant", "content": "Here is your evaluation"
@@ -41,7 +41,7 @@ def evaluatePitch():
 
         st.session_state.slides_gen_messages.append({
             "role": "user",
-            "content": user_prompt_template.format_map(st.session_state.pitch_details)
+            "content": user_prompt_template.format_map(st.session_state.userdata)
         })
 
         for message in st.session_state.slides_gen_messages:
@@ -64,7 +64,7 @@ def evaluatePitch():
             {"role": "assistant", "content": full_response})
 
     userdataEntity = UserdataEntity(
-        **st.session_state.pitch_details, pitch=full_response)
+        **st.session_state.userdata, pitch=full_response)
     set_userdata(userdataEntity.to_dict())
 
 
@@ -72,12 +72,12 @@ def two_col(obj1, obj2):
     col1, col2 = st.columns(2)
 
     with col1:
-        if value1 := st.text_input(key=obj1[2], label=obj1[0], placeholder=obj1[1], value=st.session_state.pitch_details[obj1[2]]):
-            st.session_state.pitch_details[obj1[2]] = value1
+        if value1 := st.text_input(key=obj1[2], label=obj1[0], placeholder=obj1[1], value=st.session_state.userdata[obj1[2]]):
+            st.session_state.userdata[obj1[2]] = value1
 
     with col2:
-        if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.pitch_details[obj2[2]]):
-            st.session_state.pitch_details[obj2[2]] = value2
+        if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.userdata[obj2[2]]):
+            st.session_state.userdata[obj2[2]] = value2
 
 # ui page
 
@@ -111,18 +111,18 @@ def pitch_page():
                 st.header("Competitors & Key Difference")
                 two_col(["We are similar to", "company 1", 'competitor1'], [
                     "We are similar to", "company 2", 'competitor2'])
-                if value := st.text_input(label="Our key difference", placeholder="key difference", value=st.session_state.pitch_details['key_difference']):
-                    st.session_state.pitch_details['key_difference'] = value
+                if value := st.text_input(label="Our key difference", placeholder="key difference", value=st.session_state.userdata['key_difference']):
+                    st.session_state.userdata['key_difference'] = value
             container = st.container(height=300)
             with container:
                 st.header("Funding")
-                if value := st.text_input(label="Current state and progress", placeholder="state", value=st.session_state.pitch_details['state_of_startup']):
-                    st.session_state.pitch_details['state_of_startup'] = value
+                if value := st.text_input(label="Current state and progress", placeholder="state", value=st.session_state.userdata['state_of_startup']):
+                    st.session_state.userdata['state_of_startup'] = value
                 two_col(["We are looking for", "resources", 'resources_asked'], [
                         "To help us", "how resources are used", 'how_resources_used'])
 
         st.write(user_prompt_template.format_map(
-            st.session_state.pitch_details))
+            st.session_state.userdata))
 
         if st.button(label="Evaluate Pitch"):
             evaluatePitch()
