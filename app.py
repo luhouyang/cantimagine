@@ -51,9 +51,12 @@ if "google_auth_code" in st.session_state:
 
     # global state variables
     if 'userdata' not in st.session_state:
-        data = get_userdata()
-        userdataEntity = UserdataEntity.from_firestore(data)
-        st.session_state.userdata = userdataEntity.to_dict()
+        try:
+            data = get_userdata()
+            userdataEntity = UserdataEntity.from_firestore(data)
+            st.session_state.userdata = userdataEntity.to_dict()
+        except:
+            st.session_state.userdata = UserdataEntity().to_dict()
 
     if selected == "Home":
         home.home_page()

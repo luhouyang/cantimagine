@@ -50,6 +50,7 @@ def auth_flow():
             authorization_url, state = flow.authorization_url(
                 access_type="offline",
                 include_granted_scopes="true",
+                prompt="select_account"
             )
             webbrowser.open_new_tab(authorization_url)
             
