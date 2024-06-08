@@ -12,5 +12,5 @@ def get_userdata():
     # Then query to list all users
     db = firestore.Client.from_service_account_info(
         st.secrets['firebases_key'])
-    users_ref = db.collection('users')
-    return users_ref
+    res = db.collection("users").document(st.session_state.user_info["id"]).get()
+    return res

@@ -33,7 +33,7 @@ def auth_flow():
     if auth_code:
         flow.fetch_token(code=auth_code)
         credentials = flow.credentials
-        st.write("Login Done")
+        # st.write("Login Done")
         user_info_service = build(
             serviceName="oauth2",
             version="v2",

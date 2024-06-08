@@ -2,7 +2,7 @@
 import streamlit as st
 from model.model import AIModel
 from model.prompt import elevator_system_message
-from model.firestore_model import set_userdata, get_userdata
+from model.firestore_model import set_userdata
 from entities.userdata_entity import UserdataEntity
 
 # global variables

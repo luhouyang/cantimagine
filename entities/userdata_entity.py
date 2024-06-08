@@ -42,3 +42,8 @@ class UserdataEntity:
             'pitch': self.pitch,
             'blobs_urls': self.blobs_urls
         }
+    
+    @classmethod
+    def from_firestore(cls, doc_snapshot):
+        data = doc_snapshot.to_dict()
+        return cls(**data)

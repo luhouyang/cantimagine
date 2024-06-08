@@ -8,6 +8,8 @@ from page.auth import auth_flow
 from streamlit_option_menu import option_menu
 import firebase_admin
 from firebase_admin import credentials
+from model.firestore_model import get_userdata
+from entities.userdata_entity import UserdataEntity
 
 try: 
     app = firebase_admin.get_app()
@@ -49,22 +51,9 @@ if "google_auth_code" in st.session_state:
 
     # global state variables
     if 'userdata' not in st.session_state:
-        st.session_state.userdata = {
-            'name_of_company': "",
-            'offering': "",
-            'audience': "",
-            'problem_solved': "",
-            'technologies': "",
-            'area_of_operation': "",
-            'market': "",
-            'value': "",
-            'competitor1': "",
-            'competitor2': "",
-            'key_difference': "",
-            'state_of_startup': "",
-            'resources_asked': "",
-            'how_resources_used': ""
-        }
+        data = get_userdata()
+        userdataEntity = UserdataEntity.from_firestore(data)
+        st.session_state.userdata = userdataEntity.to_dict()
 
     if selected == "Home":
         home.home_page()
