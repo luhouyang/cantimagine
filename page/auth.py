@@ -47,15 +47,15 @@ def auth_flow():
 
         create_firebase_user(user_info.get("email"))
     else:
-        col1, col2, col3 = st.columns([2, 1, 2])
+        col1, col2, col3 = st.columns([1, 2, 1])
 
         with col2:
             container = st.container(border=True, height=400)
             with container:
-                col4, col5, col6 = st.columns([1, 2, 1])
+                col4, col5, col6 = st.columns([1, 1, 1])
                 with col5:
                     st.header("Log in")
-                st.text("Sign in now to \naccelerate your startup \nidea!")
+                st.text("Sign in now to \naccelerate your startup idea!")
                 # st.image("asset/spy.png", width=200)
                 if st.button("Sign in with Google", use_container_width=True):
                     authorization_url, state = flow.authorization_url(

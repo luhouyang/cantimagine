@@ -8,7 +8,7 @@ from page.auth import auth_flow
 from streamlit_option_menu import option_menu
 import firebase_admin
 from firebase_admin import credentials
-from model.firestore_model import get_userdata
+from model.firestore_model import get_userdata, get_home_page_data
 from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
 
@@ -44,7 +44,12 @@ if "google_auth_code" in st.session_state:
 
     with st.sidebar:
 
-        st.image(image=user_info['picture'])
+        col1, col2, col3 = st.columns(3)
+        with col2:
+            st.image(image=user_info['picture'])
+        col1, col2, col3 = st.columns([1, 4, 1])
+        with col2:
+            st.write(user_info['email'])
 
         selected = option_menu(
             menu_icon="robot",
@@ -75,10 +80,11 @@ if "google_auth_code" in st.session_state:
             data = get_userdata()
             userdataEntity = UserdataEntity.from_firestore(data)
             st.session_state.userdata = userdataEntity.to_dict()
-
+            st.session_state.home_page_data = get_home_page_data()
             st.session_state.pdf_datas = get_blob_from_firebase()
         except:
             st.session_state.userdata = UserdataEntity().to_dict()
+            st.session_state.home_page_data = get_home_page_data()
             st.session_state.pdf_datas = []
 
     if selected == "Home":
