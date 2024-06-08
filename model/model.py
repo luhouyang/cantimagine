@@ -12,14 +12,11 @@ class AIModel:
         )
         return client
 
-    def loadChatCompletion(self):
+    def loadChatCompletion(self, messages):
         client = self.initModel()
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": "Say this is a test",
-                }
-            ],
+        stream = client.chat.completions.create(
+            messages=messages,
             model="gpt-3.5-turbo",
+            stream=True, max_tokens=600, temperature=0.5
         )
+        return stream

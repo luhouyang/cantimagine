@@ -1,25 +1,33 @@
 import streamlit as st
+from model.model import AIModel
 
 
 def chat_page():
+    chat_ai = AIModel()
     chatPage = st.container()
     with chatPage:
         st.title("Chat Page")
 
-        # Initialize chat history
         if "messages" not in st.session_state:
             st.session_state.messages = []
 
-        # Display chat messages from history on app rerun
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        # Accept user input
         if prompt := st.chat_input("What is up?"):
-            # Display user message in chat message container
-            with st.chat_message("user"):
-                st.markdown(prompt)
-            # Add user message to chat history
             st.session_state.messages.append(
                 {"role": "user", "content": prompt})
+            with st.chat_message("user"):
+                st.markdown(prompt)
+
+            with st.chat_message("assistant"):
+                message_placeholder = st.empty()
+                full_response = ""
+                for chunck in chat_ai.loadChatCompletion([{"role": m["role"], "content": m["content"]}
+                                                          for m in st.session_state.messages]):
+                    full_response += chunck.choices[0].delta.content or ""
+                    message_placeholder.markdown(full_response + " ")
+                message_placeholder.markdown(full_response)
+            st.session_state.messages.append(
+                {"role": "assistant", "content": full_response})
