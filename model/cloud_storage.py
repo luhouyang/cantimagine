@@ -5,6 +5,11 @@ from entities.userdata_entity import UserdataEntity
 
 
 def upload_blob_from_memory(contents, destination_blob_name, bucket_name="imagine-whack.appspot.com"):
+    st.session_state.pdf_datas.append({
+        'name': destination_blob_name,
+        'content': contents
+    })
+    
     storage_client = storage.Client.from_service_account_info(
         st.secrets['firebases_key'])
     bucket = storage_client.bucket(bucket_name)
