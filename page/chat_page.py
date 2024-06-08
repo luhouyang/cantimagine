@@ -1,11 +1,14 @@
 import streamlit as st
 from model.model import AIModel
+from streamlit_extras.bottom_container import bottom
 
 
 def chat_page():
     chat_ai = AIModel()
     chatPage = st.container()
+
     with chatPage:
+
         st.title("Chat Page")
 
         if "messages" not in st.session_state:
@@ -15,7 +18,10 @@ def chat_page():
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        if prompt := st.chat_input("What is up?"):
+        with bottom():
+            query = st.chat_input("Chat with Question Bot")
+
+        if prompt := query:
             st.session_state.messages.append(
                 {"role": "user", "content": prompt})
             with st.chat_message("user"):
