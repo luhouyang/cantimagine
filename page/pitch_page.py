@@ -31,16 +31,16 @@ def evaluatePitch():
                 {
                     "role": "system",
                     "content": elevator_system_message.format_map(st.session_state.pitch_details)
-                    },
+                },
                 {
                     "role": "assistant", "content": "Here is your evaluation"
-                    }
-                ]
-            
+                }
+            ]
+
         st.session_state.messages.append({
-            "role": "user", 
+            "role": "user",
             "content": user_prompt_template.format_map(st.session_state.pitch_details)
-            })
+        })
 
         for message in st.session_state.messages:
             if message["role"] != "system":
@@ -48,17 +48,19 @@ def evaluatePitch():
                     st.markdown(message["content"])
 
         with st.chat_message("assistant"):
-                    message_placeholder = st.empty()
-                    full_response = ""
-                    for chunck in chat_ai.loadChatCompletion(
-                        [
-                         {"role": m["role"], "content": m["content"]} for m in st.session_state.messages
-                        ]
-                        ):
-                        full_response += chunck.choices[0].delta.content or ""
-                        message_placeholder.markdown(full_response + " ")
-                    message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+            message_placeholder = st.empty()
+            full_response = ""
+            for chunck in chat_ai.loadChatCompletion(
+                [
+                    {"role": m["role"], "content": m["content"]} for m in st.session_state.messages
+                ]
+            ):
+                full_response += chunck.choices[0].delta.content or ""
+                message_placeholder.markdown(full_response + " ")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response})
+
 
 def two_col(obj1, obj2):
     col1, col2 = st.columns(2)
@@ -70,44 +72,50 @@ def two_col(obj1, obj2):
     with col2:
         if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.pitch_details[obj2[2]]):
             st.session_state.pitch_details[obj2[2]] = value2
-    
+
 
 # ui page
 def pitch_page():
     pitchPage = st.container()
     with pitchPage:
-        
 
         st.title("Elevator Pitch")
-        st.divider()
+        left_col, right_col = st.columns(2)
 
-        container = st.container(height=400)
-        with container:
-            st.header("About Startup")
-            two_col(["My company", "company name", 'name_of_company'], ["Is developing", "product/service", 'offering'])
-            two_col(["To help", "audience", 'audience'], ["To solve", "problem solved", 'problem_solved'])
-            two_col(["Using", "technologies", 'technologies'], ["We plan to operate", "area of operation", 'area_of_operation'])
-        
-        container = st.container(height=200)
-        with container:
-            st.header("About Market")
-            two_col(["We compete in", "market", 'market'], ["Last years market value", "value e.g. 100 million", 'value'])
-        
-        container = st.container(height=300)
-        with container:
-            st.header("Competitors & Key Difference")
-            two_col(["We are similar to", "company 1", 'competitor1'], ["We are similar to", "company 2", 'competitor2'])
-            if value := st.text_input(label="Our key difference", placeholder="key difference", value=st.session_state.pitch_details['key_difference']):
-                st.session_state.pitch_details['key_difference'] = value
-        
-        container = st.container(height=300)
-        with container:
-            st.header("Funding")
-            if value := st.text_input(label="Current state and progress", placeholder="state", value=st.session_state.pitch_details['state_of_startup']):
-                st.session_state.pitch_details['state_of_startup'] = value
-            two_col(["We are looking for", "resources", 'resources_asked'], ["To help us", "how resources are used", 'how_resources_used'])
-        
-        st.write(user_prompt_template.format_map(st.session_state.pitch_details))
+        with left_col:
+            container = st.container(height=400)
+            with container:
+                st.header("About Startup")
+                two_col(["My company", "company name", 'name_of_company'], [
+                        "Is developing", "product/service", 'offering'])
+                two_col(["To help", "audience", 'audience'], [
+                        "To solve", "problem solved", 'problem_solved'])
+                two_col(["Using", "technologies", 'technologies'], [
+                        "We plan to operate", "area of operation", 'area_of_operation'])
+            container = st.container(height=200)
+            with container:
+                st.header("About Market")
+                two_col(["We compete in", "market", 'market'], [
+                        "Last years market value", "value e.g. 100 million", 'value'])
+
+        with right_col:
+            container = st.container(height=300)
+            with container:
+                st.header("Competitors & Key Difference")
+                two_col(["We are similar to", "company 1", 'competitor1'], [
+                    "We are similar to", "company 2", 'competitor2'])
+                if value := st.text_input(label="Our key difference", placeholder="key difference", value=st.session_state.pitch_details['key_difference']):
+                    st.session_state.pitch_details['key_difference'] = value
+            container = st.container(height=300)
+            with container:
+                st.header("Funding")
+                if value := st.text_input(label="Current state and progress", placeholder="state", value=st.session_state.pitch_details['state_of_startup']):
+                    st.session_state.pitch_details['state_of_startup'] = value
+                two_col(["We are looking for", "resources", 'resources_asked'], [
+                        "To help us", "how resources are used", 'how_resources_used'])
+
+        st.write(user_prompt_template.format_map(
+            st.session_state.pitch_details))
 
         if st.button(label="Evaluate Pitch"):
             evaluatePitch()
