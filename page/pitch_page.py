@@ -28,8 +28,8 @@ def evaluatePitch():
     chat_ai = AIModel()
     container = st.container(height=500)
     with container:
-        if "messages" not in st.session_state:
-            st.session_state.messages = [
+        if "slides_gen_messages" not in st.session_state:
+            st.session_state.slides_gen_messages = [
                 {
                     "role": "system",
                     "content": elevator_system_message.format_map(st.session_state.pitch_details)
@@ -39,12 +39,12 @@ def evaluatePitch():
                 }
             ]
 
-        st.session_state.messages.append({
+        st.session_state.slides_gen_messages.append({
             "role": "user",
             "content": user_prompt_template.format_map(st.session_state.pitch_details)
         })
 
-        for message in st.session_state.messages:
+        for message in st.session_state.slides_gen_messages:
             if message["role"] != "system":
                 with st.chat_message(message["role"]):
                     st.markdown(message["content"])
@@ -54,18 +54,19 @@ def evaluatePitch():
             full_response = ""
             for chunck in chat_ai.loadChatCompletion(
                 [
-                    {"role": m["role"], "content": m["content"]} for m in st.session_state.messages
+                    {"role": m["role"], "content": m["content"]} for m in st.session_state.slides_gen_messages
                 ]
             ):
                 full_response += chunck.choices[0].delta.content or ""
                 message_placeholder.markdown(full_response + " ")
             message_placeholder.markdown(full_response)
-        st.session_state.messages.append(
+        st.session_state.slides_gen_messages.append(
             {"role": "assistant", "content": full_response})
 
-
-    userdataEntity = UserdataEntity(st.session_state.pitch_details, pitch=full_response)
+    userdataEntity = UserdataEntity(
+        st.session_state.pitch_details, pitch=full_response)
     set_userdata(userdataEntity)
+
 
 def two_col(obj1, obj2):
     col1, col2 = st.columns(2)
@@ -77,8 +78,10 @@ def two_col(obj1, obj2):
     with col2:
         if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.pitch_details[obj2[2]]):
             st.session_state.pitch_details[obj2[2]] = value2
-        
+
 # ui page
+
+
 def pitch_page():
     pitchPage = st.container()
     with pitchPage:
@@ -123,4 +126,3 @@ def pitch_page():
 
         if st.button(label="Evaluate Pitch"):
             evaluatePitch()
-
