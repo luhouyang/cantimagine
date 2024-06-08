@@ -33,7 +33,7 @@ except ValueError as e:
 st.set_page_config(layout="wide")
 
 if "google_auth_code" not in st.session_state:
-        auth_flow()
+    auth_flow()
 
 if "google_auth_code" in st.session_state:
     user_info = st.session_state["user_info"]
