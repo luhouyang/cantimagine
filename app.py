@@ -75,6 +75,7 @@ if "google_auth_code" in st.session_state:
             st.session_state.pdf_datas = get_blob_from_firebase()
         except:
             st.session_state.userdata = UserdataEntity().to_dict()
+            st.session_state.pdf_datas = []
 
     if selected == "Home":
         home.home_page()
