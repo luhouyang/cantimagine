@@ -32,24 +32,33 @@ def create_swot_chart(swot_data):
     col1, col2 = st.columns(2)
 
     with col1:
-        st.header("Strengths")
-        # Check if category exists in data to avoid key errors
-        if "Strengths" in swot_data:
-            for item in swot_data["Strengths"]:
-                st.text(f"- {item}")
+        container1 = st.container(height=200, border=True)
+        with container1:
+            st.subheader("Strengths")
+            # Check if category exists in data to avoid key errors
+            if "Strengths" in swot_data:
+                for item in swot_data["Strengths"]:
+                    st.text(f"- {item}")
 
-        st.header("Weaknesses")
-        if "Weaknesses" in swot_data:
-            for item in swot_data["Weaknesses"]:
-                st.text(f"- {item}")
+        container2 = st.container(height=200, border=True)
+        with container2:
+            st.subheader("Weaknesses")
+            if "Weaknesses" in swot_data:
+                for item in swot_data["Weaknesses"]:
+                    st.text(f"- {item}")
 
     with col2:
-        st.header("Opportunities")
-        if "Opportunities" in swot_data:
-            for item in swot_data["Opportunities"]:
-                st.text(f"- {item}")
+        container3 = st.container(height=200, border=True)
+        with container3:
+            st.subheader("Opportunities")
+            if "Opportunities" in swot_data:
+                for item in swot_data["Opportunities"]:
+                    st.text(f"- {item}")
 
-        st.header("Threats")
-        if "Threats" in swot_data:
-            for item in swot_data["Threats"]:
-                st.text(f"- {item}")
+        container4 = st.container(height=200, border=True)
+        with container4:
+
+            st.subheader("Threats")
+            if "Threats" in swot_data:
+                for item in swot_data["Threats"]:
+                    st.text(f"- {item}")
