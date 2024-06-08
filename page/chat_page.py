@@ -1,8 +1,9 @@
 import streamlit as st
 from model.model import AIModel
 from streamlit_extras.bottom_container import bottom
-from model.pdf_reader import extract_data
+from model.pdf_reader import formatText
 import model.prompt as prt
+import model.swot as swot
 
 
 def getAvatar(role):
@@ -33,16 +34,17 @@ def chat_page():
 
         with bottom():
 
-            uploaded_files = st.file_uploader(
-                'Upload relevant pdf', type='pdf', accept_multiple_files=True)
+            # uploaded_files = st.file_uploader(
+            #     'Upload relevant pdf', type='pdf', accept_multiple_files=True)
 
             query = st.chat_input("Chat with Question Bot")
 
         if prompt := query:
             internal_prompt = prompt
-            if uploaded_files is not None:
-                df = extract_data(uploaded_files)
-                internal_prompt += f'Here is the data extracted from pdf files for your reference:\n {df}'
+            # if uploaded_files is not None:
+            #     df = extract_data(uploaded_files)
+            if st.session_state.pdf_datas != []:
+                internal_prompt += formatText(st.session_state.pdf_datas)
 
             concatenated_prompt = st.session_state.messages
             st.session_state.messages.append(
@@ -61,3 +63,8 @@ def chat_page():
 
             st.session_state.messages.append(
                 {"role": "assistant", "content": full_response})
+            if "SWOT" in full_response:
+                parsed_swot_data = swot.extract_swot(full_response)
+                st.subheader('SWOT Analysis Chart')
+                swot_fig = swot.create_swot_chart(parsed_swot_data)
+                st.pyplot(swot_fig)

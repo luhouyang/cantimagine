@@ -21,3 +21,10 @@ def extract_individual_data(pdf_file):
             # Extract text, append if text is not None
             pdf_text += page.extract_text() or ''
         return pdf_text
+
+
+def formatText(pdfDatas):
+    full_text = "Here are the datas extracted from PDFs for your reference:\n"
+    for pdf in pdfDatas:
+        full_text += f'File name: {pdf["name"]} Content: {pdf["content"]}'
+    return full_text[:4096]
