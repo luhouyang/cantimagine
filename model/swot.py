@@ -2,8 +2,13 @@
 import streamlit as st
 
 
+def remove_asterisks(text):
+    return text.replace('*', '')
+
+
 def extract_swot(text):
     import re
+    text = remove_asterisks(text)
     # Define the possible headers for each SWOT category
     categories = ['Strengths', 'Weaknesses', 'Opportunities', 'Threats']
     # Use regular expressions to find these categories
