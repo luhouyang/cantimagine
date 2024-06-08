@@ -2,6 +2,8 @@
 import streamlit as st
 from model.model import AIModel
 from model.prompt import elevator_system_message
+from model.firestore_model import set_userdata, get_userdata
+from entities.userdata_entity import UserdataEntity
 
 # global variables
 user_prompt_template = """
@@ -60,6 +62,9 @@ def evaluatePitch():
                     message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
+    userdataEntity = UserdataEntity(st.session_state.pitch_details, pitch=full_response)
+    set_userdata(userdataEntity)
+
 def two_col(obj1, obj2):
     col1, col2 = st.columns(2)
 
@@ -70,6 +75,10 @@ def two_col(obj1, obj2):
     with col2:
         if value2 := st.text_input(key=obj2[2], label=obj2[0], placeholder=obj2[1], value=st.session_state.pitch_details[obj2[2]]):
             st.session_state.pitch_details[obj2[2]] = value2
+
+def test():
+    userdataEntity = UserdataEntity(st.session_state.pitch_details)
+    st.write(userdataEntity.name_of_company)
     
 
 # ui page
@@ -111,3 +120,5 @@ def pitch_page():
 
         if st.button(label="Evaluate Pitch"):
             evaluatePitch()
+
+        test()

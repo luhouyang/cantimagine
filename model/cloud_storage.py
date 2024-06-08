@@ -1,0 +1,9 @@
+import streamlit as st
+from google.cloud import storage
+
+def upload_blob_from_memory(contents, destination_blob_name, bucket_name="imagine-whack.appspot.com"):
+    storage_client = storage.Client.from_service_account_info(st.secrets['firebase'])
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_string(contents)
