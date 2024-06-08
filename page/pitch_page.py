@@ -67,9 +67,6 @@ def evaluatePitch():
     userdataEntity = UserdataEntity(st.session_state.pitch_details, pitch=full_response)
     set_userdata(userdataEntity)
 
-    userdataEntity = UserdataEntity(st.session_state.pitch_details, pitch=full_response)
-    set_userdata(userdataEntity)
-
 def two_col(obj1, obj2):
     col1, col2 = st.columns(2)
 
