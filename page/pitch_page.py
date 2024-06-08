@@ -1,9 +1,10 @@
 # import packages
 import streamlit as st
 from model.model import AIModel
-from model.prompt import elevator_system_message
+import model.prompt as prt
 from model.firestore_model import set_userdata, get_userdata
 from entities.userdata_entity import UserdataEntity
+from model.slides_generator import SlideGenerator
 
 # global variables
 user_prompt_template = """
@@ -26,42 +27,46 @@ We are looking for {resources_asked} to help us {how_resources_used}.
 # evaluate elevator pitch
 def evaluatePitch():
     chat_ai = AIModel()
-    container = st.container(height=500)
-    with container:
-        if "slides_gen_messages" not in st.session_state:
-            st.session_state.slides_gen_messages = [
-                {
-                    "role": "system",
-                    "content": elevator_system_message.format_map(st.session_state.pitch_details)
-                },
-                {
-                    "role": "assistant", "content": "Here is your evaluation"
-                }
-            ]
 
-        st.session_state.slides_gen_messages.append({
-            "role": "user",
-            "content": user_prompt_template.format_map(st.session_state.pitch_details)
-        })
+    if "slides_gen_messages" not in st.session_state:
+        st.session_state.slides_gen_messages = [
+            {
+                "role": "system",
+                "content": prt.slides_system_message.format_map(st.session_state.pitch_details)
+            }
+        ]
+    slide_gen = SlideGenerator()
+    slides_titles = slide_gen.slide_titles
+    slide_contents = [slide_gen.generate_slide_content(
+        st.session_state.slides_gen_messages + [{"role": "user", "content": f'Generate pitch deck part for{title}'}]) for title in slides_titles]
 
-        for message in st.session_state.slides_gen_messages:
-            if message["role"] != "system":
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
+    slide_gen.create_presentation(slides_titles, slide_contents)
+    st.success("Presentation generated successfully!")
+    st.markdown(slide_gen.get_ppt_download_link(), unsafe_allow_html=True)
 
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            for chunck in chat_ai.loadChatCompletion(
-                [
-                    {"role": m["role"], "content": m["content"]} for m in st.session_state.slides_gen_messages
-                ]
-            ):
-                full_response += chunck.choices[0].delta.content or ""
-                message_placeholder.markdown(full_response + " ")
-            message_placeholder.markdown(full_response)
-        st.session_state.slides_gen_messages.append(
-            {"role": "assistant", "content": full_response})
+    # st.session_state.slides_gen_messages.append({
+    #     "role": "user",
+    #     "content": user_prompt_template.format_map(st.session_state.pitch_details)
+    # })
+
+    # for message in st.session_state.slides_gen_messages:
+    #     if message["role"] != "system":
+    #         with st.chat_message(message["role"]):
+    #             st.markdown(message["content"])
+
+    # with st.chat_message("assistant"):
+    #     message_placeholder = st.empty()
+    full_response = ""
+    #     for chunck in chat_ai.loadChatCompletion(
+    #         [
+    #             {"role": m["role"], "content": m["content"]} for m in st.session_state.slides_gen_messages
+    #         ]
+    #     ):
+    #         full_response += chunck.choices[0].delta.content or ""
+    #         message_placeholder.markdown(full_response + " ")
+    #     message_placeholder.markdown(full_response)
+    # st.session_state.slides_gen_messages.append(
+    #     {"role": "assistant", "content": full_response})
 
     userdataEntity = UserdataEntity(
         st.session_state.pitch_details, pitch=full_response)
