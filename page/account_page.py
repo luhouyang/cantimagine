@@ -14,6 +14,8 @@ def account_page():
     accountPage = st.container()
     with accountPage:
         st.title("Data Source")
+        st.text(
+            "This is where all the data used to generate precise response for your startup idea.")
 
         data = get_shared_from_firebase()
         st.subheader("Shared Data")

@@ -95,6 +95,7 @@ def pitch_page():
     with pitchPage:
 
         st.title("Elevator Pitch")
+        st.text("Not sure how to pitch your idea? Fret not, this section helps you build your pitch deck with the help of generative AI.")
         left_col, right_col = st.columns(2)
 
         with left_col:
