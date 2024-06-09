@@ -45,7 +45,8 @@ if "google_auth_code" in st.session_state:
 
         col1, col2, col3 = st.columns(3)
         with col2:
-            st.image(image=user_info['picture'])
+            # st.image(image=user_info['picture'])
+            st.image(image="asset/pigeon.png")
         col1, col2, col3 = st.columns([1, 5, 1])
         with col2:
             st.write(user_info['email'])
