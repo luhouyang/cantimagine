@@ -4,7 +4,6 @@ import streamlit as st
 import simple_webbrowser as swb
 import firebase_admin
 from firebase_admin import auth, credentials
-from http import cookies
 
 
 def create_firebase_user(email):
@@ -20,7 +19,6 @@ def create_firebase_user(email):
 
 
 def auth_flow():
-    c = cookies.Morsel.set("SameSite", "None")
     auth_secret = {'web': st.secrets.fireauth}
     auth_code = st.query_params.get("code")
     # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
@@ -31,7 +29,7 @@ def auth_flow():
     flow = google_auth_oauthlib.flow.Flow.from_client_config(auth_secret,  # replace with you json credentials from your google auth app
                                                              scopes=[
                                                                  "https://www.googleapis.com/auth/userinfo.email", "openid"],
-                                                             redirect_uri="https://cantimagine-imaginewhack.streamlit.app",
+                                                             redirect_uri="http://localhost:8501",
                                                              ) # https://cantimagine-imaginewhack.streamlit.app
     if auth_code:
         flow.fetch_token(code=auth_code)
