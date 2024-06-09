@@ -64,4 +64,4 @@ def auth_flow():
                         prompt="select_account"
                     )
                     # webbrowser.open_new_tab(authorization_url)
-                    swb.website(url=authorization_url, new=2)
+                    swb.website(url=authorization_url, new=0)
