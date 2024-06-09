@@ -1,7 +1,7 @@
 import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
 import streamlit as st
-import webbrowser
+import simple_webbrowser as swb
 import firebase_admin
 from firebase_admin import auth, credentials
 
@@ -30,7 +30,7 @@ def auth_flow():
                                                              scopes=[
                                                                  "https://www.googleapis.com/auth/userinfo.email", "openid"],
                                                              redirect_uri="http://localhost:8501",
-                                                             )
+                                                             ) # https://cantimagine-imaginewhack.streamlit.app
     if auth_code:
         flow.fetch_token(code=auth_code)
         credentials = flow.credentials
@@ -63,4 +63,5 @@ def auth_flow():
                         include_granted_scopes="true",
                         prompt="select_account"
                     )
-                    webbrowser.open_new_tab(authorization_url)
+                    # webbrowser.open_new_tab(authorization_url)
+                    swb.website(url=authorization_url, new=0)

@@ -19,3 +19,4 @@ oauthlib
 pdfplumber
 python-pptx
 toml
+simple-webbrowser
