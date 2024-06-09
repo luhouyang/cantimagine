@@ -34,7 +34,6 @@ except ValueError as e:
 st.set_page_config(layout="wide")
 
 
-
 if "google_auth_code" not in st.session_state:
     auth_flow()
 
@@ -53,8 +52,8 @@ if "google_auth_code" in st.session_state:
 
         selected = option_menu(
             menu_icon="robot",
-            menu_title="StartupEco",
-            options=["Home", "Elevator Pitch", "Idea Kitchen", "Account"],
+            menu_title="Pigeon",
+            options=["Home", "Elevator Pitch", "Idea Kitchen", "Data Source"],
             icons=["house-fill", "lightbulb", "chat-fill", "person-circle"],
             default_index=0,
         )
@@ -94,7 +93,7 @@ if "google_auth_code" in st.session_state:
         pitch.pitch_page()
     elif selected == "Idea Kitchen":
         chat.chat_page()
-    elif selected == "Account":
+    elif selected == "Data Source":
         acc.account_page()
     else:
         err.error_page()

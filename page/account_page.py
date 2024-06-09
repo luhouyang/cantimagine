@@ -13,53 +13,40 @@ def uploadFile(file, destination):
 def account_page():
     accountPage = st.container()
     with accountPage:
-        st.title("Account Page")
+        st.title("Data Source")
 
         data = get_shared_from_firebase()
-        st.subheader("Shared Datas")
-        col4, col5, col6 = st.columns(3)
+        st.subheader("Shared Data")
+        col1, col2 = st.columns(2)
         for j in range(len(data)):
-            if (j % 3 == 0):
-                with col6:
+            if (j % 2 == 1):
+                with col1:
                     container = st.container(height=200)
                     with container:
                         st.subheader(data[j]["name"])
                         st.markdown(
                             data[j]["content"])
-            elif (j % 2 == 0):
-                with col5:
+            else:
+                with col2:
                     container = st.container(height=200)
                     with container:
                         st.subheader(data[j]["name"])
                         st.markdown(
                             data[j]["content"])
-            elif (j % 2 == 1):
-                with col4:
-                    container = st.container(height=200)
-                    with container:
-                        st.subheader(data[j]["name"])
-                        st.markdown(
-                            data[j]["content"])
+
         st.subheader("Personal Data")
-        col1, col2, col3 = st.columns(3)
+        col3, col4 = st.columns(2)
         if "pdf_datas" in st.session_state:
             for i in range(len(st.session_state.pdf_datas)):
-                if (i % 3 == 0):
-                    with col1:
-                        container = st.container(height=200)
-                        with container:
-                            st.subheader(st.session_state.pdf_datas[i]["name"])
-                            st.markdown(
-                                st.session_state.pdf_datas[i]["content"])
-                elif (i % 2 == 0):
-                    with col2:
-                        container = st.container(height=200)
-                        with container:
-                            st.subheader(st.session_state.pdf_datas[i]["name"])
-                            st.markdown(
-                                st.session_state.pdf_datas[i]["content"])
-                elif (i % 2 == 1):
+                if (i % 2 == 0):
                     with col3:
+                        container = st.container(height=200)
+                        with container:
+                            st.subheader(st.session_state.pdf_datas[i]["name"])
+                            st.markdown(
+                                st.session_state.pdf_datas[i]["content"])
+                else:
+                    with col4:
                         container = st.container(height=200)
                         with container:
                             st.subheader(st.session_state.pdf_datas[i]["name"])
