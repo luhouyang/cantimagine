@@ -11,6 +11,8 @@ from firebase_admin import credentials
 from model.firestore_model import get_userdata, get_home_page_data
 from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
+from http import cookies
+
 
 try:
     app = firebase_admin.get_app()
@@ -35,6 +37,7 @@ st.set_page_config(layout="wide")
 
 
 if "google_auth_code" not in st.session_state:
+    c = cookies.Morsel("SameSite", "None")
     auth_flow()
 
 if "google_auth_code" in st.session_state:
