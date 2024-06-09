@@ -1,6 +1,8 @@
 # **Welcome to Pigeon🕊️**
 
-**Pigeon is your go-to platform to validate, develop, and solidify your startup idea.\nWith our integrated Gen AI, you can launch your brilliant idea in no time!**
+**Pigeon is your go-to platform to validate, develop, and solidify your startup idea.**
+
+**With our integrated Gen AI, you can launch your brilliant idea in no time!**
 
 ## **Key Features**
 
