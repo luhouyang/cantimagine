@@ -29,8 +29,8 @@ def auth_flow():
     flow = google_auth_oauthlib.flow.Flow.from_client_config(auth_secret,  # replace with you json credentials from your google auth app
                                                              scopes=[
                                                                  "https://www.googleapis.com/auth/userinfo.email", "openid"],
-                                                             redirect_uri="https://cantimagine-imaginewhack.streamlit.app",
-                                                             )
+                                                             redirect_uri="http://localhost:8501",
+                                                             ) # https://cantimagine-imaginewhack.streamlit.app
     if auth_code:
         flow.fetch_token(code=auth_code)
         credentials = flow.credentials
@@ -64,4 +64,4 @@ def auth_flow():
                         prompt="select_account"
                     )
                     # webbrowser.open_new_tab(authorization_url)
-                    swb.website(url=authorization_url, new=0, browser=swb.GOOGLE_COMMON)
+                    swb.website(url=authorization_url, new=0)
