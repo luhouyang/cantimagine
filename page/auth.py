@@ -58,10 +58,10 @@ def auth_flow():
                 st.text("Sign in now to \naccelerate your startup idea!")
                 # st.image("asset/spy.png", width=200)
                 if st.button("Sign in with Google", use_container_width=True):
-                    authorization_url, state = flow.authorization_url(
+                    authorization_url, state = flow.redirect_uri(
                         access_type="offline",
                         include_granted_scopes="true",
                         prompt="select_account"
                     )
                     # webbrowser.open_new_tab(authorization_url)
-                    swb.website(url=authorization_url, new=1)
+                    swb.website(url=authorization_url)
