@@ -8,8 +8,6 @@ def home_page():
         st.title("Home Page")
         st.divider()
 
-        st.write(st.session_state.home_page_data[0].name_of_company)
-
         col1, col2, col3 = st.columns(3)
         col4, col5 = st.columns(2)
         if "home_page_data" in st.session_state:
