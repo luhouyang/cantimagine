@@ -6,7 +6,7 @@ def home_page():
     homePage = st.container()
     with homePage:
         st.title("Welcome to Pigeon🕊️")
-        st.text("Pigeon is your go-to platform to validate, develop, and solidify your startup idea.\nWith our integrated Gen AI, you can launch your brilliant idea iin no time!")
+        st.text("Pigeon is your go-to platform to validate, develop, and solidify your startup idea.\nWith our integrated Gen AI, you can launch your brilliant idea in no time!")
 
         st.subheader("Key Features")
         st.markdown(
@@ -14,7 +14,7 @@ def home_page():
         st.markdown(
             "2. **IDEA KITCHEN**: A well-trained *ideation expert* that assist you to access your startup idea critically.")
         st.markdown(
-            "2. **WIDE KNOWLEDGE BASE**: The implementation of *Retrieval-Augmented Generation (RAG)* makes high precision prompting possible.")
+            "3. **WIDE KNOWLEDGE BASE**: The implementation of *Retrieval-Augmented Generation (RAG)* makes high precision prompting possible.")
         st.subheader("Registered Startups")
         col1, col2, col3 = st.columns(3)
         col4, col5 = st.columns(2)

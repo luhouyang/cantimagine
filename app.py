@@ -12,6 +12,7 @@ from model.firestore_model import get_userdata, get_home_page_data
 from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
 
+
 try:
     app = firebase_admin.get_app()
 except ValueError as e:
