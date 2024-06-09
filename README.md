@@ -12,13 +12,12 @@
 
 ## **Setup & Use**
 
-1. Use pip to install all dependancies, dependencies can be found at ```requirements.txt```
+  1. Use pip to install all dependencies, dependencies can be found at ```requirements.txt```
 
-1. Run command from the root directory of the project
-```
-streamlit run app.py
-```
+  2. Run command from the root directory of the project
+  ```
+  streamlit run app.py
+  ```
+  3. Login to your Google Acount
 
-1. Login to your Google Acount
-
-1. Let your creativity flow free
+  4. Let your creativity flow free
