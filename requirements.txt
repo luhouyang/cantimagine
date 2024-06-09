@@ -2,7 +2,6 @@ openai
 streamlit
 langchain
 streamlit-extras
-base64
 firebase-admin
 google-api-core
 google-api-python-client
