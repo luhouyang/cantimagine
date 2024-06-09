@@ -12,7 +12,7 @@
 
 ## **Setup & Use**
 
-1. Use pip to install all dependancies
+1. Use pip to install all dependancies, dependencies can be found at ```requirements.txt```
 
 1. Run command from the root directory of the project
 ```
