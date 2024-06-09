@@ -37,7 +37,7 @@ st.set_page_config(layout="wide")
 
 
 if "google_auth_code" not in st.session_state:
-    c = cookies.Morsel("SameSite", "None")
+    c = cookies.Morsel.set("SameSite", "None")
     auth_flow()
 
 if "google_auth_code" in st.session_state:

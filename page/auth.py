@@ -20,7 +20,7 @@ def create_firebase_user(email):
 
 
 def auth_flow():
-    c = cookies.Morsel("SameSite", "None")
+    c = cookies.Morsel.set("SameSite", "None")
     auth_secret = {'web': st.secrets.fireauth}
     auth_code = st.query_params.get("code")
     # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
