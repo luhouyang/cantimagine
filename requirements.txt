@@ -1,3 +1,12 @@
 openai
 streamlit
 langchain
+streamlit_extras
+firebase_admin
+google_auth_oauthlib
+googleapiclient
+webbrowser
+base64
+pptx
+pdfplumber
+google.cloud
