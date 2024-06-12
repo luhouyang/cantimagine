@@ -3,6 +3,7 @@ streamlit
 langchain
 streamlit-extras
 streamlit-option-menu
+streamlit-cookies-manager
 firebase-admin
 google-api-core
 google-api-python-client

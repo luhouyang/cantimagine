@@ -12,6 +12,97 @@ from model.firestore_model import get_userdata, get_home_page_data
 from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
 
+from streamlit_cookies_manager import EncryptedCookieManager
+"""
+The prefix parameter in EncryptedCookieManager is used to ensure that your cookies are uniquely identifiable and do not conflict with cookies from other applications or parts of your application. You can change prefix="myapp_" to any string that uniquely identifies your application. This string should be unique to your application and descriptive enough to avoid conflicts with other cookies.
+
+For example, if your application is named "MyStreamlitApp," you could use:
+
+python
+Copy code
+prefix = "mystreamlitapp_"
+Here's how you can update the example with this new prefix:
+
+python
+Copy code
+import streamlit as st
+from streamlit_cookies_manager import EncryptedCookieManager
+
+# This should be a secret key for encryption, ensure it's kept secret.
+COOKIES_KEY = "YOUR_SECRET_KEY"
+
+# Use a unique prefix for your application
+prefix = "mystreamlitapp_"
+cookies = EncryptedCookieManager(prefix=prefix, password=COOKIES_KEY)
+
+# To access the cookie manager's methods, it must be part of a session state.
+if not cookies.ready():
+    st.stop()
+
+# Set a cookie with the SameSite=None attribute
+def set_cookie():
+    cookie_name = "my_cookie"
+    cookie_value = "cookie_value"
+    cookie_options = {
+        "max_age": 3600,
+        "expires": None,
+        "path": "/",
+        "domain": None,
+        "secure": True,
+        "httponly": False,
+        "samesite": "None"  # This is the SameSite attribute
+    }
+    cookies.set(cookie_name, cookie_value, **cookie_options)
+    st.write(f"Cookie '{cookie_name}' set with SameSite=None")
+
+# Retrieve a cookie value
+def get_cookie():
+    cookie_name = "my_cookie"
+    cookie_value = cookies.get(cookie_name)
+    if cookie_value:
+        st.write(f"Cookie '{cookie_name}' has value: {cookie_value}")
+    else:
+        st.write(f"Cookie '{cookie_name}' not found")
+
+# Call the functions
+set_cookie()
+get_cookie()
+By setting the prefix to "mystreamlitapp_" or another unique identifier, you ensure that the cookies managed by your Streamlit application are distinct and avoid conflicts with cookies from other sources.
+"""
+
+prefix = "pigeonlikehotdog_"
+COOKIES_KEY = "sausagelikepigeon"
+cookies = EncryptedCookieManager(prefix=prefix, password=COOKIES_KEY)
+if not cookies.ready():
+    st.stop()
+
+def set_cookie():
+    cookie_name = "my_cookie"
+    cookie_value = "cookie_value"
+    cookie_options = {
+        "max_age": 3600,
+        "expires": None,
+        "path": "/",
+        "domain": None,
+        "secure": True,
+        "httponly": False,
+        "samesite": "None"  # This is the SameSite attribute
+    }
+    cookies.set(cookie_name, cookie_value, **cookie_options)
+    st.write(f"Cookie '{cookie_name}' set with SameSite=None")
+
+# Retrieve a cookie value
+def get_cookie():
+    cookie_name = "my_cookie"
+    cookie_value = cookies.get(cookie_name)
+    if cookie_value:
+        st.write(f"Cookie '{cookie_name}' has value: {cookie_value}")
+    else:
+        st.write(f"Cookie '{cookie_name}' not found")
+
+# Call the functions
+set_cookie()
+get_cookie()
 
 try:
     app = firebase_admin.get_app()
