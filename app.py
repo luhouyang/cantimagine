@@ -12,15 +12,15 @@ from model.firestore_model import get_userdata, get_home_page_data
 from model.cloud_storage import get_blob_from_firebase
 from entities.userdata_entity import UserdataEntity
 
-from streamlit_cookies_manager import EncryptedCookieManager
+# from streamlit_cookies_manager import EncryptedCookieManager
 
 st.set_page_config(layout="wide")
 
-prefix = "pigeonlikehotdog_"
+# prefix = "pigeonlikehotdog_"
 
-cookies = EncryptedCookieManager(prefix=prefix, password=st.secrets['encode'].COOKIES_KEY)
-if not cookies.ready():
-    st.stop()
+# cookies = EncryptedCookieManager(prefix=prefix, password=st.secrets['encode'].COOKIES_KEY)
+# if not cookies.ready():
+    # st.stop()
 
 
 try:
@@ -42,15 +42,15 @@ except ValueError as e:
     cred = credentials.Certificate(cert)
     firebase_admin.initialize_app(cred)
 
-    cookies['max_age'] = "3600"
-    cookies['path'] = "/"
-    cookies['httponly'] = "False"
-    cookies['secure'] = "True"
-    cookies['samesite'] = "None; Secure"
+    # cookies['max_age'] = "3600"
+    # cookies['path'] = "/"
+    # cookies['httponly'] = "False"
+    # cookies['secure'] = "True"
+    # cookies['samesite'] = "None; Secure"
 
     
 if "google_auth_code" not in st.session_state:
-    st.write(cookies)
+    # st.write(cookies)
     auth_flow()
 
 if "google_auth_code" in st.session_state:
