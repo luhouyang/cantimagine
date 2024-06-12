@@ -46,7 +46,7 @@ except ValueError as e:
     cookies['path'] = "/"
     cookies['httponly'] = "False"
     cookies['secure'] = "True"
-    cookies['samesite'] = "None"
+    cookies['samesite'] = "None; Secure"
 
     
 if "google_auth_code" not in st.session_state:
