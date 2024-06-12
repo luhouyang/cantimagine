@@ -1,3 +1,5 @@
 .streamlit/secrets.toml
 
 local_scripts/
+
+not_tracked/
