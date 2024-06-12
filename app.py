@@ -14,39 +14,14 @@ from entities.userdata_entity import UserdataEntity
 
 from streamlit_cookies_manager import EncryptedCookieManager
 
+st.set_page_config(layout="wide")
+
 prefix = "pigeonlikehotdog_"
 
-cookies = EncryptedCookieManager(prefix=prefix, password=st.secrets['cookie'])
+cookies = EncryptedCookieManager(prefix=prefix, password=st.secrets['encode'].COOKIES_KEY)
 if not cookies.ready():
     st.stop()
 
-def set_cookie():
-    cookie_name = "my_cookie"
-    cookie_value = "cookie_value"
-    cookie_options = {
-        "max_age": 3600,
-        "expires": None,
-        "path": "/",
-        "domain": None,
-        "secure": True,
-        "httponly": False,
-        "samesite": "None"  # This is the SameSite attribute
-    }
-    cookies.set(cookie_name, cookie_value, **cookie_options)
-    st.write(f"Cookie '{cookie_name}' set with SameSite=None")
-
-# Retrieve a cookie value
-def get_cookie():
-    cookie_name = "my_cookie"
-    cookie_value = cookies.get(cookie_name)
-    if cookie_value:
-        st.write(f"Cookie '{cookie_name}' has value: {cookie_value}")
-    else:
-        st.write(f"Cookie '{cookie_name}' not found")
-
-# Call the functions
-set_cookie()
-get_cookie()
 
 try:
     app = firebase_admin.get_app()
@@ -67,10 +42,15 @@ except ValueError as e:
     cred = credentials.Certificate(cert)
     firebase_admin.initialize_app(cred)
 
-st.set_page_config(layout="wide")
+    cookies['max_age'] = "3600"
+    cookies['path'] = "/"
+    cookies['httponly'] = "False"
+    cookies['secure'] = "True"
+    cookies['samesite'] = "None"
 
-
+    
 if "google_auth_code" not in st.session_state:
+    st.write(cookies)
     auth_flow()
 
 if "google_auth_code" in st.session_state:

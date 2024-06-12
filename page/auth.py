@@ -29,7 +29,7 @@ def auth_flow():
     flow = google_auth_oauthlib.flow.Flow.from_client_config(auth_secret,  # replace with you json credentials from your google auth app
                                                              scopes=[
                                                                  "https://www.googleapis.com/auth/userinfo.email", "openid"],
-                                                             redirect_uri="https://cantimagine-imaginewhack.streamlit.app",
+                                                             redirect_uri=" https://cantimagine-imaginewhack.streamlit.app",
                                                              )  # https://cantimagine-imaginewhack.streamlit.app
     if auth_code:
         flow.fetch_token(code=auth_code)
