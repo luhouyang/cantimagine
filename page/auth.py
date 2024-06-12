@@ -51,19 +51,37 @@ def auth_flow():
 
         with col2:
             container = st.container(border=True, height=400)
+            
+            # button state
+            if "signin" not in st.session_state:
+                st.session_state.signin = True
+            def setLogin(state):
+                st.session_state.signin = state
+
+            # init google auth
+            authorization_url, state = flow.authorization_url(
+                    access_type="offline",
+                    include_granted_scopes="true",
+                    prompt="select_account"
+                )
+
             with container:
-                col4, col5, col6 = st.columns([1, 1, 1])
-                with col5:
-                    st.header("Log in")
-                st.text("Sign in now to \naccelerate your startup idea!")
-                # st.image("asset/spy.png", width=200)
-                if st.button("Sign in with Google", use_container_width=True):
-                    authorization_url, state = flow.authorization_url(
-                        access_type="offline",
-                        include_granted_scopes="true",
-                        prompt="select_account"
-                    )
-                    url=f"""<a href="{authorization_url}" target="_blank">Login</a>"""
-                    st.markdown(url, unsafe_allow_html=True)
-                    # webbrowser.open_new_tab(authorization_url)
-                    # swb.website(url=authorization_url, new=0)
+                _, col4, col5, col6, _ = st.columns([1, 1, 1, 1, 1])
+                with col4:
+                    if st.button("Sign in"):
+                        setLogin(True)
+                with col6:
+                    if st.button("Sign up"):
+                        setLogin(False)
+                
+                if st.session_state.signin:
+                    st.text("Sign in now to \naccelerate your startup idea!")
+                    st.write("(/0.0\\\)\n\nother login options here\n\n(P.P)\n\n")
+                    
+                    st.link_button("Sign in with Google", authorization_url, use_container_width=True)
+                        # url=f"""<a href="{authorization_url}" target="_blank">Sign in with Google</a>"""
+                        # st.markdown(url, unsafe_allow_html=True)
+                        # webbrowser.open_new_tab(authorization_url)
+                        # swb.website(url=authorization_url, new=0)
+                else:
+                    st.write("coming soon")
