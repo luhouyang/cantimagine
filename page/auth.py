@@ -63,7 +63,7 @@ def auth_flow():
                         include_granted_scopes="true",
                         prompt="select_account"
                     )
-                    url=f"""<a href="{authorization_url}" target="_self">Login</a>"""
+                    url=f"""<a href="{authorization_url}" target="_blank">Login</a>"""
                     st.markdown(url, unsafe_allow_html=True)
                     # webbrowser.open_new_tab(authorization_url)
                     # swb.website(url=authorization_url, new=0)
