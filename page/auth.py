@@ -76,7 +76,7 @@ def auth_flow():
                 
                 if st.session_state.signin:
                     st.header('Sign in now to')
-                    st.text("accelerate your startup idea!")
+                    st.text("accelerate your startup idea!\n\n")
                     # st.write("(/0.0\\\)\n\nother login options here\n\n(P.P)\n\n")
                     
                     st.link_button("Sign in with Google", authorization_url, use_container_width=True)
