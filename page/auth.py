@@ -52,11 +52,11 @@ def auth_flow():
         with col2:
             container = st.container(border=True, height=400)
             
-            # # button state
-            # if "signin" not in st.session_state:
-            #     st.session_state.signin = True
-            # def setLogin(state):
-            #     st.session_state.signin = state
+            # button state
+            if "signin" not in st.session_state:
+                st.session_state.signin = True
+            def setLogin(state):
+                st.session_state.signin = state
 
             # init google auth
             authorization_url, state = flow.authorization_url(
